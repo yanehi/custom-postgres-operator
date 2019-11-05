@@ -1,0 +1,36 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: acid-minimal-cluster
+  namespace: zalando-postgres
+spec:
+  teamId: "ACID"
+  volume:
+    size: 1Gi
+  numberOfInstances: 3
+  users:
+    zalando:  # database owner
+    - superuser
+    - createdb
+    foo_user: []  # role for application foo
+  databases:
+    foo: zalando  # dbname: owner
+    test: zalando
+    test2: zalando
+  postgresql:
+    version: "11"
+    parameters:
+      shared_buffers: "128MB"
+      max_connections: "10"
+      log_statement: "all"
+      log_destination: "stderr"
+      log_directory: "/var/log/postgresql"
+  patroni:
+    initdb:
+      encoding: "UTF8"
+      locale: "de_DE.UTF-8"
+      data-checksums: "true"
+    pg_hba:
+    - hostssl all all 0.0.0.0/0 md5
+    - host    all all 0.0.0.0/0 md5
+    - host    all zalando 192.168.232.109/24 md5
