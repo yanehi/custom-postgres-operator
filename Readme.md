@@ -1,6 +1,6 @@
 # Custom Postgres Operator
 
-This repository contains a custom setup for an [HA](https://www.postgresql.org/docs/current/high-availability.html) [Postgres](https://www.postgresql.org/) cluster, based on [Postgres Operator](https://github.com/zalando/postgres-operator) from [Patroni](https://github.com/zalando/spilo).
+This repository contains a custom setup for an [HA](https://www.postgresql.org/docs/current/high-availability.html) [Postgres](https://www.postgresql.org/) cluster, based on [Postgres Operator](https://github.com/zalando/postgres-operator) from [Patroni](https://github.com/zalando/spilo). The manifest folder only contains the minimum needed YAML files for the setup.
 
 The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by [Rancher](https://rancher.com/) and hosted at the infrastructure of Proventa AG.
 
@@ -16,7 +16,7 @@ The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by
 
 ## Installation
 
-The installation will be executed by applying manifests in a specific order, based on the operator installation from patroni. The setup is deployed to an specific namespace  named *zalando-postgres* which must be ceated on the K8s cluster. You also can setup the operator(+Postgres cluster) with Helm chart or Operator Lifecycle Manager.
+The installation will be executed by applying manifests in a specific order, based on the operator installation from Patroni. The setup is deployed to an specific namespace  named *zalando-postgres*, which must be ceated first on the K8s cluster. You also can setup the operator(+Postgres cluster) with Helm chart or Operator Lifecycle Manager.
 (fyi: you can also set the current-context for kubectl, here ns=zalando-postgres for example)
 
 ### Create the operator
