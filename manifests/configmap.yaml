@@ -54,17 +54,17 @@ data:
   pod_management_policy: "ordered_ready"
   pod_role_label: spilo-role
   pod_service_account_name: "zalando-postgres-operator"
-  pod_terminate_grace_period: 5m
+  pod_terminate_grace_period: 30s
   # postgres_superuser_teams: "postgres_superusers"
   # protected_role_names: "admin"
   ready_wait_interval: 3s
-  ready_wait_timeout: 30s
-  repair_period: 5m
+  ready_wait_timeout: 5s
+  repair_period: 5s
   replica_dns_name_format: '{cluster}-repl.{team}.staging.{hostedzone}'
   replication_username: standby
   resource_check_interval: 3s
   resource_check_timeout: 10m
-  resync_period: 5m
+  resync_period: 5s
   ring_log_lines: "100"
   secret_name_template: '{username}.{cluster}.credentials'
   # sidecar_docker_images: ""
