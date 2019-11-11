@@ -62,7 +62,7 @@ $ kubectl get svc -l application=spilo -L spilo-role --namespace zalando-postgre
 You can update the Postgres cluster with the *manifest file* or directly with *psql-client*.
 
 * After editting Postgres cluster file apply the modified configuration
-  * `kubectl get svc -l application=spilo -L spilo-role --namespace zalando-postgres`
+  * `kubectl apply -f manifests/minimal-postgres-manifest.yaml --namespace zalando-postgres`
 * Restart(Reload?) Patroni
   * `kubectl exec -i <Pod-Name> supervisorctl restart patroni --namespace zalando-postgres`
 
