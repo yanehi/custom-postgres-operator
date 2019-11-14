@@ -1,22 +1,29 @@
+# custom k8s ressource Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-operator
 spec:
+  # number of replicas for postgres-operator
   replicas: 1
+  # specification is for evervy replica with the definied selectors
   selector:
     matchLabels:
       name: postgres-operator
   template:
     metadata:
+      # set labels for every postgres-operator replica
       labels:
         name: postgres-operator
     spec:
+      # bin ServiceAccount with definied ClusterRole to every replica
       serviceAccountName: zalando-postgres-operator
+      # every postgres-operator Deployment Pod contains one container
       containers:
       - name: postgres-operator
         image: registry.opensource.zalan.do/acid/postgres-operator:v1.2.0
         imagePullPolicy: IfNotPresent
+        # set requested and limited resources for the container
         resources:
           requests:
             cpu: 500m
@@ -24,10 +31,12 @@ spec:
           limits:
             cpu: 2000m
             memory: 500Mi
+        # define at which user the postgres-operator container will run    
         securityContext:
           runAsUser: 1000
           runAsNonRoot: true
           readOnlyRootFilesystem: true
+        # set some environment variables defined in "before" created ConfigMap with the name postgres-operator  
         env:
         # provided additional ENV vars can overwrite individual config map entries
         - name: CONFIG_MAP_NAME

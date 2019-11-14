@@ -1,31 +1,48 @@
+# custom api from zalando
+# https://github.com/zalando/postgres-operator/tree/master/pkg/apis/acid.zalan.do/v1
 apiVersion: "acid.zalan.do/v1"
+# custom api object postgresql
+# https://github.com/zalando/postgres-operator/blob/master/pkg/apis/acid.zalan.do/v1/postgresql_type.go
 kind: postgresql
 metadata:
+  # name of the pod
+  # podtemplate is statefulset -> every instance has the same name with own ordinalindex
   name: acid-minimal-cluster
+  # namespace in k82 where the pods will be created
   namespace: zalando-postgres
 spec:
+  # required parameter from patroni
   teamId: "ACID"
+  # size and accessmode(=defined in storageclass) for persistent volume claim
   volume:
     size: 1Gi
     storageClass: standard
+  # number of pods
+  # 1 is master, others replicas
   numberOfInstances: 3
+  # define some users with access rights
   users:
     zalando:  # database owner
     - superuser
     - createdb
     foo_user: []  # role for application foo
+  # define some database with its owner
   databases:
     foo: zalando  # dbname: owner
     test: zalando
+  # needed for shared_memory, in docker default=64mb 
   enableShmVolume: true
   postgresql:
     version: "11"
+    # parameters for postgresql.conf
+    # can be edited after kubectl apply for example and restart spilo service
     parameters:
       shared_buffers: "128MB"
       max_connections: "10"
       log_statement: "all"
       log_destination: "stderr"
       log_directory: "/var/log/postgresql"
+  # define the minimum and limit of resources of an postgres database container 
   resources:
     requests:
       cpu: 15m
@@ -33,12 +50,14 @@ spec:
     limits:
       cpu: 300m
       memory: 275Mi
+  # parameters for initializing database    
   patroni:
     initdb:
       encoding: "UTF8"
       locale: "en_US.UTF-8"
       data-checksums: "true"
       auth-host: "scram-sha-256"
+    # entries for host-based access file in postgres  
     pg_hba:
     - hostssl all all 0.0.0.0/0 scram-sha-256
     - host    all all 0.0.0.0/0 scram-sha-256
