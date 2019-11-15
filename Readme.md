@@ -9,7 +9,10 @@ The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by
 
 * *Projectname:* zalando-postgres
 * *Namespace:* zalando-postgres
-* 3 Nodes
+* *3 Nodes*(per Node 4Cores and 8GB RAM)
+  * master+worker and two worker nodes
+* *Storage Provisioner*: Longhorn
+  * Cluster and PVC Snapshots to [minio](https://min.io/) 
 * *LoadBalancer:* [Metallb](https://metallb.universe.tf)
   * access actual Postgres master over external-IP and specified port
   * required VPN connection!!
@@ -57,11 +60,11 @@ $ kubectl get pods -l application=spilo -L spilo-role --namespace zalando-postgr
 $ kubectl get svc -l application=spilo -L spilo-role --namespace zalando-postgres
 ```
 
-### Update Postgres cluster
+### Update Pod Manifest
 
 You can update the Postgres cluster with the *manifest file* or directly with *psql-client*.
 
-* After editting Postgres cluster file apply the modified configuration
+* After editting Postgres cluster file apply the modified configuration(with *apply* the whole object while be updated)
   * `kubectl apply -f manifests/minimal-postgres-manifest.yaml --namespace zalando-postgres`
 * Restart(Reload?) Patroni
   * `kubectl exec -i <Pod-Name> supervisorctl restart patroni --namespace zalando-postgres`
