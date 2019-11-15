@@ -85,5 +85,11 @@ $ psql -d <databasename> -U <databaseuser>
 
 ## Referenced
 
-* [Patroni Postgres Operator](https://github.com/zalando/postgres-operator)
+* [Postgres Operator-Github](https://github.com/zalando/postgres-operator)
   * [Documentation](https://postgres-operator.readthedocs.io/en/latest/)
+* [Patroni-Github](https://github.com/zalando/patroni)
+  * [Documentation](https://patroni.readthedocs.io/en/latest/)
+* [Spilo-Github](https://github.com/zalando/spilo)
+  * [Documentation](https://spilo.readthedocs.io/en/latest/)
+* [Custom Zaland K8s API](https://github.com/zalando/postgres-operator/tree/master/pkg/apis/acid.zalan.do/v1)
+* [Spilo Docker Setup for Postgres Cluster](https://github.com/zalando/spilo/tree/master/postgres-appliance)
