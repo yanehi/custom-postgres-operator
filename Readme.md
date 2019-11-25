@@ -43,7 +43,7 @@ $ kubectl get pod -l name=postgres-operator --namespace zalando-postgres
 
 ### Create Postgres cluster
 
-* create a Postgres cluster from [postgres manifest](manifest/minimal-postgres-manifest.yml) with the specified values, like databases, users and *postgresql.conf* parameters
+* create a Postgres cluster from [postgres manifest](https://github.com/yanehi/custom-postgres-operator/blob/master/manifests/minimal-postgres-manifest.yaml) with the specified values, like databases, users and *postgresql.conf* parameters
 
 ```shell
 $ kubectl create -f manifests/minimal-postgres-manifest.yaml --namespace zalando-postgres
