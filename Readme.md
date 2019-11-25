@@ -10,7 +10,7 @@ The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by
 * *Projectname:* zalando-postgres
 * *Namespace:* zalando-postgres
 * *3 Nodes*(per Node 4Cores and 8GB RAM)
-  * master+worker and two worker nodes
+  * master and three worker nodes
 * *Storage Provisioner*: Longhorn
   * Cluster and PVC Snapshots to [minio](https://min.io/) 
 * *LoadBalancer:* [Metallb](https://metallb.universe.tf)
