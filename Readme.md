@@ -83,6 +83,12 @@ $ psql -h <LoadBalancer-IP> -p <LoadBalancer-Port>  -d <databasename> -U <databa
 $ psql -d <databasename> -U <databaseuser>
 ```
 
+### Delete Postgres Cluster
+
+```shell
+kubectl delete postgresql acid-minimal-cluster --namespace zalando-postgres
+```
+
 ## Referenced
 
 * [Postgres Operator-Github](https://github.com/zalando/postgres-operator)

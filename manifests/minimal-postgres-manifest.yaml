@@ -19,7 +19,7 @@ spec:
     storageClass: standard
   # number of pods
   # 1 is master, others replicas
-  numberOfInstances: 3
+  numberOfInstances: 2
   # define some users with access rights
   users:
     zalando:  # database owner
