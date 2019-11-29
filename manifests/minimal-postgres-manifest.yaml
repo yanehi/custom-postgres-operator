@@ -8,7 +8,7 @@ metadata:
   # name of the pod
   # podtemplate is statefulset -> every instance has the same name with own ordinalindex
   name: acid-minimal-cluster
-  # namespace in k82 where the pods will be created
+  # namespace in k8s where the pods will be created
   namespace: zalando-postgres
 spec:
   # required parameter from patroni

@@ -1,0 +1,12 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: standard
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: "true"
+provisioner: driver.longhorn.io
+parameters:
+  numberOfReplicas: "2"
+  staleReplicaTimeout: "30"
+  fromBackup: ""
+  recurringJobs: '[{"name":"backup", "task":"backup", "cron":"5 2 * * *", "retain":7},{"name":"week", "task":"backup", "cron":"15 2 * * 0", "retain":5},{"name":"month", "task":"backup", "cron":"25 2 1 * *", "retain":6}]'
