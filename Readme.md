@@ -26,11 +26,11 @@ The installation will be executed by applying manifests in a specific order, bas
 
 ```shell
 # operator configuration
-$ kubectl create -f manifests/configmap.yaml --namespace zalando-postgres
+kubectl create -f manifests/configmap.yaml --namespace zalando-postgres
 # identity and permissions
-$ kubectl create -f manifests/operator-service-account-rbac.yaml --namespace zalando-postgres
+kubectl create -f manifests/operator-service-account-rbac.yaml --namespace zalando-postgres
 # deploy operator to K8s
-$ kubectl create -f manifests/postgres-operator.yaml --namespace zalando-postgres
+kubectl create -f manifests/postgres-operator.yaml --namespace zalando-postgres
 ```
 
 ### Check operator status
@@ -38,7 +38,7 @@ $ kubectl create -f manifests/postgres-operator.yaml --namespace zalando-postgre
 * get all pods in the `namespace zalando-postgres` with the operator label `name=postgres-operator`
 
 ```shell
-$ kubectl get pod -l name=postgres-operator --namespace zalando-postgres
+kubectl get pod -l name=postgres-operator --namespace zalando-postgres
 ```
 
 ### Create Postgres cluster
@@ -46,18 +46,18 @@ $ kubectl get pod -l name=postgres-operator --namespace zalando-postgres
 * create a Postgres cluster from [postgres manifest](https://github.com/yanehi/custom-postgres-operator/blob/master/manifests/minimal-postgres-manifest.yaml) with the specified values, like databases, users and *postgresql.conf* parameters
 
 ```shell
-$ kubectl create -f manifests/minimal-postgres-manifest.yaml --namespace zalando-postgres
+kubectl create -f manifests/minimal-postgres-manifest.yaml --namespace zalando-postgres
 ```
 
 ### Check Postgres cluster status
 
 ```shell
 # check the deployed cluster
-$ kubectl get postgresql
+kubectl get postgresql
 # check created database pods with spilo-role (master, replica)
-$ kubectl get pods -l application=spilo -L spilo-role --namespace zalando-postgres
+kubectl get pods -l application=spilo -L spilo-role --namespace zalando-postgres
 # check created service resources and get ext. loadbalancer ip and port
-$ kubectl get svc -l application=spilo -L spilo-role --namespace zalando-postgres
+kubectl get svc -l application=spilo -L spilo-role --namespace zalando-postgres
 ```
 
 ### Update Pod Manifest
@@ -74,13 +74,13 @@ You can update the Postgres cluster with the *manifest file* or directly with *p
 * required `pg_hba.conf` entry for the external LoadBalancer IP
 
 ```shell
-$ psql -h <LoadBalancer-IP> -p <LoadBalancer-Port>  -d <databasename> -U <databaseuser>
+psql -h <LoadBalancer-IP> -p <LoadBalancer-Port>  -d <databasename> -U <databaseuser>
 ```
 
 * connect directly from shell in Rancher
 
 ```shell
-$ psql -d <databasename> -U <databaseuser>
+psql -d <databasename> -U <databaseuser>
 ```
 
 ### Delete Postgres Cluster

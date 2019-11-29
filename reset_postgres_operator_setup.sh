@@ -15,3 +15,5 @@ kubectl delete configmaps postgres-operator -n zalando-postgres
 kubectl delete postgresql acid-minimal-cluster --namespace zalando-postgres
 
 kubectl delete service acid-minimal-cluster acid-minimal-cluster-repl -n zalando-postgres
+
+kubectl delete poddisruptionbudgets postgres-acid-minimal-cluster-pdb -n zalando-postgres
