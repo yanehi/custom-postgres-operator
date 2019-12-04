@@ -37,6 +37,7 @@ spec:
     # parameters for postgresql.conf
     # can be edited after kubectl apply for example and restart spilo service
     parameters:
+      listen_addresses: '*'
       shared_buffers: "128MB"
       max_connections: "10"
       log_statement: "all"
