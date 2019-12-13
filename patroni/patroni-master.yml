@@ -1,0 +1,112 @@
+bootstrap:
+    dcs:
+      loop_wait: 10
+      maximum_lag_on_failover: 33554432
+      postgresql:
+        parameters:
+          archive_mode: 'on'
+          archive_timeout: 1800s
+          autovacuum_analyze_scale_factor: 0.02
+          autovacuum_max_workers: 5
+          autovacuum_vacuum_scale_factor: 0.05
+          checkpoint_completion_target: 0.9
+          hot_standby: 'on'
+          log_autovacuum_min_duration: 0
+          log_checkpoints: 'on'
+          log_connections: 'on'
+          log_disconnections: 'on'
+          log_line_prefix: '%t [%p]: [%l-1] %c %x %d %u %a %h '
+          log_lock_waits: 'on'
+          log_min_duration_statement: 500
+          log_statement: ddl
+          log_temp_files: 0
+          max_connections: '10'
+          max_replication_slots: 5
+          max_wal_senders: 5
+          tcp_keepalives_idle: 900
+          tcp_keepalives_interval: 100
+          track_functions: all
+          wal_keep_segments: 8
+          wal_level: hot_standby
+          wal_log_hints: 'on'
+        use_pg_rewind: true
+        use_slots: true
+      retry_timeout: 10
+      ttl: 30
+    initdb:
+    - auth-host: scram-sha-256
+    - auth-local: trust
+    - data-checksums
+    - encoding: UTF8
+    - locale: en_US.UTF-8
+    post_init: /scripts/post_init.sh "zalandos"
+    users:
+      zalandos:
+        options:
+        - CREATEDB
+        - NOLOGIN
+        password: ''
+  kubernetes:
+    labels:
+      application: spilo
+    pod_ip: 10.42.3.59
+    ports:
+    - name: postgresql
+      port: 5432
+    role_label: spilo-role
+    scope_label: version
+    use_endpoints: true
+  namespace: zalando-postgres
+  postgresql:
+    authentication:
+      replication:
+        password: BSgbCfrHh5dFiAQ3qD7CPEmOC4hgR2aLoP6ooybd92SAqF6DtpuWo4yA0hrcRTPW
+        username: standby
+      superuser:
+        password: 3A0S8YU2R36LzUhLIdeRZpjWAEdS6CK65sZ53vW1sehy4wqGfr6YeEISOIHSLADc
+        username: postgres
+    bin_dir: /usr/lib/postgresql/11/bin
+    callbacks:
+      on_role_change: /scripts/on_role_change.sh zalandos true
+    connect_address: 10.42.3.59:5432
+    data_dir: /home/postgres/pgdata/pgroot/data
+    listen: 0.0.0.0:5432
+    name: acid-minimal-cluster-2
+    parameters:
+      archive_command: /bin/true
+      bg_mon.listen_address: 0.0.0.0
+      extwlist.custom_path: /scripts
+      extwlist.extensions: btree_gin,btree_gist,citext,hstore,intarray,ltree,pgcrypto,pgq,pg_trgm,postgres_fdw,uuid-ossp,hypopg,timescaledb,pg_partman
+      listen_addresses: '*'
+      log_destination: stderr
+      log_directory: /var/log/postgresql
+      log_file_mode: '0644'
+      log_filename: postgresql-%u.log
+      log_rotation_age: 1d
+      log_statement: all
+      log_truncate_on_rotation: 'on'
+      logging_collector: 'on'
+      pg_stat_statements.track_utility: 'off'
+      shared_buffers: 128MB
+      shared_preload_libraries: bg_mon,pg_stat_statements,pgextwlist,pg_auth_mon,timescaledb,pg_cron,pg_stat_kcache,set_user
+      ssl: 'on'
+      ssl_cert_file: /home/postgres/server.crt
+      ssl_key_file: /home/postgres/server.key
+    pg_hba:
+    - hostssl all all 0.0.0.0/0 scram-sha-256
+    - host    all all 0.0.0.0/0 scram-sha-256
+    - host    all zalando 192.168.232.109/24 scram-sha-256
+    - local   all             all                                   trust
+    - hostssl all             +zalandos    127.0.0.1/32       pam
+    - host    all             all                127.0.0.1/32       md5
+    - hostssl all             +zalandos    ::1/128            pam
+    - host    all             all                ::1/128            md5
+    - hostssl replication     standby all                md5
+    - hostnossl all           all                all                reject
+    - hostssl all             +zalandos    all                pam
+    - hostssl all             all                all                md5
+    use_unix_socket: true
+  restapi:
+    connect_address: 10.42.3.59:8008
+    listen: 0.0.0.0:8008
+  scope: acid-minimal-cluster
