@@ -7,12 +7,13 @@ kind: postgresql
 metadata:
   # name of the pod
   # podtemplate is statefulset -> every instance has the same name with own ordinalindex
-  name: acid-minimal-cluster
+  name: postgres-instance
   # namespace in k8s where the pods will be created
   namespace: zalando-postgres
 spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-11:1.6-p1
   # required parameter from patroni
-  teamId: "ACID"
+  teamId: "Postgres"
   # size and accessmode(=defined in storageclass) for persistent volume claim
   volume:
     size: 1Gi
