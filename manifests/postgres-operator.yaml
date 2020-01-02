@@ -27,10 +27,10 @@ spec:
         resources:
           requests:
             cpu: 500m
-            memory: 250Mi
+            memory: 125Mi
           limits:
-            cpu: 2000m
-            memory: 500Mi
+            cpu: 1000m
+            memory: 250Mi
         # define at which user the postgres-operator container will run    
         securityContext:
           runAsUser: 1000

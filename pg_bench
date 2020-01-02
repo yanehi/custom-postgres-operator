@@ -1,0 +1,30 @@
+$ psql -d postgres -U postgres -c "DROP DATABASE IF EXISTS test"
+
+# Testdatenbank mti dem Namen test_container erstellen
+$ psql -d postgres -U postgres -c "CREATE DATABASE test"
+
+# -i = initialize 
+# -s = scale default database value(16MB) * 50 = 800MB
+# time = measure the time for executing the command
+$ time pgbench -i -s 50 test -U postgres (~30min 51sec.)
+
+table                   # of rows
+---------------------------------
+pgbench_branches        50
+pgbench_tellers         500
+pgbench_accounts        5.000.000
+pgbench_history         0
+
+# c = clients -> number of clients to connect with
+# j = threads -> number of worker processes for pgbench
+# t = transactions -> number of transactions per client session => 10*100.000 = 1.000.000 transactions
+# -t 100000 -> nach 42min abgebrochen -> ram const stabil unter req; cpu const. über req
+# -t 10000 -> number of transactions per client session => 10*10.000 = 100.000 transactions
+$ time pgbench -c 10 -j 2 -t 10000 test -U postgres
+
+
+# kill database with to much ressourcen
+$ pgbench -c 90 -j 10 -t 100000 test -U postgres
+
+# get size of database
+SELECT pg_size_pretty( pg_database_size('test') );

@@ -16,7 +16,7 @@ spec:
   teamId: "Postgres"
   # size and accessmode(=defined in storageclass) for persistent volume claim
   volume:
-    size: 1Gi
+    size: 15Gi
     storageClass: standard
   # number of pods
   # 1 is master, others replicas
@@ -30,7 +30,6 @@ spec:
   # define some database with its owner
   databases:
     foo: zalando  # dbname: owner
-    test: zalando
   # needed for shared_memory, in docker default=64mb 
   enableShmVolume: true
   allowedSourceRanges:  # load balancers' source ranges for both master and replica services
@@ -42,18 +41,18 @@ spec:
     parameters:
       listen_addresses: '*'
       shared_buffers: "128MB"
-      max_connections: "10"
+      max_connections: "100"
       log_statement: "all"
       log_destination: "stderr"
       log_directory: "/var/log/postgresql"
   # define the minimum and limit of resources of an postgres database container 
   resources:
     requests:
-      cpu: 15m
-      memory: 150Mi
+      cpu: 100m
+      memory: 275Mi
     limits:
       cpu: 300m
-      memory: 275Mi
+      memory: 300Mi
   # parameters for initializing database    
   patroni:
     initdb:
