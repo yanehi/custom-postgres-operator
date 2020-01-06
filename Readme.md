@@ -2,7 +2,7 @@
 
 This repository contains a custom setup for an [HA](https://www.postgresql.org/docs/current/high-availability.html) [Postgres](https://www.postgresql.org/) cluster, based on [Postgres Operator](https://github.com/zalando/postgres-operator) from [Patroni](https://github.com/zalando/spilo). The manifest folder only contains the minimum needed YAML files for the setup.
 
-The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by [Rancher](https://rancher.com/) and hosted at the infrastructure of Proventa AG.
+The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by [Rancher](https://rancher.com/).
 
 
 ## Setup on K8s cluster(Rancher) 
@@ -10,11 +10,11 @@ The Cluster runs on an [K8s](https://kubernetes.io/) Cluster which is managed by
 * *Projectname:* zalando-postgres
 * *Namespace:* zalando-postgres
 * *4 Nodes*(per Node 4Cores and 8GB RAM)
-  * master and three worker nodes
+  * 3 master and 3 worker nodes
 * *Storage Provisioner*: Longhorn
   * Cluster and PVC Snapshots to [minio](https://min.io/) 
 * *LoadBalancer:* [Metallb](https://metallb.universe.tf)
-  * access actual Postgres master over external-IP and specified port
+  * access actual Postgres master and standbys over external-IP and specified port
   * required VPN connection!!
 
 ## Installation

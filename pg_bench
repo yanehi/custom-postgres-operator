@@ -6,7 +6,8 @@ $ psql -d postgres -U postgres -c "CREATE DATABASE test"
 # -i = initialize 
 # -s = scale default database value(16MB) * 50 = 800MB
 # time = measure the time for executing the command
-$ time pgbench -i -s 50 test -U postgres (~30min 51sec.)
+# -i = 100 ~ 32min; -i = 200 ~ 62min
+$ time pgbench -i -s 50 test -U postgres (~18min.)
 
 table                   # of rows
 ---------------------------------
@@ -14,6 +15,7 @@ pgbench_branches        50
 pgbench_tellers         500
 pgbench_accounts        5.000.000
 pgbench_history         0
+
 
 # c = clients -> number of clients to connect with
 # j = threads -> number of worker processes for pgbench
