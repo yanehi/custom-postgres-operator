@@ -95,7 +95,6 @@ bootstrap:
     pg_hba:
     - hostssl all all 0.0.0.0/0 scram-sha-256
     - host    all all 0.0.0.0/0 scram-sha-256
-    - host    all zalando 192.168.232.109/24 scram-sha-256
     - local   all             all                                   trust
     - hostssl all             +zalandos    127.0.0.1/32       pam
     - host    all             all                127.0.0.1/32       md5

@@ -17,9 +17,3 @@ kubectl delete postgresql postgres-instance -n zalando-postgres
 sleep 3
 
 kubectl delete service postgres-instance postgres-instance-config postgres-instance-repl -n zalando-postgres
-
-# sleep 3
-
-# kubectl delete poddisruptionbudgets postgres-acid-minimal-cluster-pdb -n zalando-postgres
-
-# kubectl delete pvc pgdata-acid-minimal-cluster-0 pgdata-acid-minimal-cluster-1 pgdata-acid-minimal-cluster-2 -n zalando-postgres
