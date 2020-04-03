@@ -17,3 +17,13 @@ kubectl delete postgresql postgres-instance -n zalando-postgres
 sleep 3
 
 kubectl delete service postgres-instance postgres-instance-config postgres-instance-repl -n zalando-postgres
+
+kubectl delete deployment postgres-operator -n zalando-postgres
+
+kubectl delete statefulset postgres-instance -n zalando-postgres
+
+kubectl delete pvc pgdata-postgres-instance-0 -n zalando-postgres
+
+kubectl delete pvc pgdata-postgres-instance-1 -n zalando-postgres
+
+kubectl delete pvc pgdata-postgres-instance-2 -n zalando-postgres

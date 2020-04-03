@@ -21,7 +21,7 @@ spec:
       # every postgres-operator Deployment Pod contains one container
       containers:
       - name: postgres-operator
-        image: registry.opensource.zalan.do/acid/postgres-operator:latest
+        image: registry.opensource.zalan.do/acid/postgres-operator:v1.3.1
         imagePullPolicy: IfNotPresent
         # set requested and limited resources for the container
         resources:

@@ -11,12 +11,12 @@ metadata:
   # namespace in k8s where the pods will be created
   namespace: zalando-postgres
 spec:
-  dockerImage: registry.opensource.zalan.do/acid/spilo-11:1.6-p1
+  dockerImage: registry.opensource.zalan.do/acid/spilo-cdp-12:1.6-p16
   # required parameter from patroni
   teamId: "Postgres"
   # size and accessmode(=defined in storageclass) for persistent volume claim
   volume:
-    size: 15Gi
+    size: 5Gi
     storageClass: standard
   # number of pods
   # 1 is master, others replicas
@@ -32,27 +32,29 @@ spec:
     foo: zalando  # dbname: owner
   # needed for shared_memory, in docker default=64mb 
   enableShmVolume: true
+  enableMasterLoadBalancer: true
+  enableReplicaLoadBalancer: true
   allowedSourceRanges:  # load balancers' source ranges for both master and replica services
   - 192.168.0.0/16
   postgresql:
-    version: "11"
+    version: "12"
     # parameters for postgresql.conf
     # can be edited after kubectl apply for example and restart spilo service
     parameters:
       listen_addresses: '*'
-      shared_buffers: "128MB"
-      max_connections: "100"
+      shared_buffers: "32MB"
+      max_connections: "10"
       log_statement: "all"
       log_destination: "stderr"
       log_directory: "/var/log/postgresql"
   # define the minimum and limit of resources of an postgres database container 
   resources:
     requests:
-      cpu: 100m
-      memory: 275Mi
+      cpu: 10m
+      memory: 100Mi
     limits:
-      cpu: 300m
-      memory: 300Mi
+      cpu: 500m
+      memory: 500Mi
   # parameters for initializing database    
   patroni:
     initdb:
@@ -64,4 +66,3 @@ spec:
     pg_hba:
     - hostssl all all 0.0.0.0/0 scram-sha-256
     - host    all all 0.0.0.0/0 scram-sha-256
-    - host    all all 0.0.0.0/0 md5
